@@ -24,6 +24,8 @@ certifi==2024.7.4
 click==8.1.7
     # via typer
     # via uvicorn
+coverage==7.5.4
+    # via pytest-cov
 dnspython==2.6.1
     # via email-validator
 email-validator==2.2.0
@@ -45,6 +47,8 @@ idna==3.7
     # via anyio
     # via email-validator
     # via httpx
+iniconfig==2.0.0
+    # via pytest
 jinja2==3.1.4
     # via fastapi
 markdown-it-py==3.0.0
@@ -58,6 +62,10 @@ mypy-extensions==1.0.0
     # via mypy
 orjson==3.10.6
     # via fastapi
+packaging==24.1
+    # via pytest
+pluggy==1.5.0
+    # via pytest
 pydantic==2.8.2
     # via fastapi
     # via sqlmodel
@@ -65,6 +73,9 @@ pydantic-core==2.20.1
     # via pydantic
 pygments==2.18.0
     # via rich
+pytest==8.2.2
+    # via pytest-cov
+pytest-cov==5.0.0
 python-dotenv==1.0.1
     # via uvicorn
 python-multipart==0.0.9
