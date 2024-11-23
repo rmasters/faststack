@@ -62,8 +62,8 @@ def build_fastapi_app(
         async with container_context({FASTAPI_REQUEST_KEY: request}):
             yield
 
-    if "dependencies" in fastapi_kwargs:
-        fastapi_kwargs["dependencies"].insert(0, Depends(init_di_context))
+    dependencies = fastapi_kwargs.pop("dependencies", [])
+    fastapi_kwargs["dependencies"] = [Depends(init_di_context)] + dependencies
 
     """
     Finally, Build the application
