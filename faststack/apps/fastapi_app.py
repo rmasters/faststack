@@ -1,6 +1,6 @@
 from contextlib import asynccontextmanager
 from typing import Any, AsyncIterator, Callable
-from fastapi import Depends, FastAPI, Request
+from fastapi import FastAPI, Request
 from that_depends import BaseContainer, container_context
 from faststack.apps.ioc import FASTAPI_REQUEST_KEY, FaststackContainer
 
@@ -48,25 +48,21 @@ def build_fastapi_app(
 
         await FaststackContainer.tear_down()
 
-    if "lifespan" in fastapi_kwargs:
-        del fastapi_kwargs["lifespan"]
+    app = FastAPI(**fastapi_kwargs, lifespan=lifespan)
 
     """
     Dependency injection context
 
     Here we inject the request into the container context, so that it can be used by other dependencies.
 
+    This needs to be done as a middleware, as request dependencies appear to resolve before app dependencies.
+
     """
 
-    async def init_di_context(request: Request) -> AsyncIterator[None]:
+    # TODO: Rewrite as a starlette custom middleware
+    @app.middleware("http")
+    async def add_request_to_container_context(request: Request, call_next):
         async with container_context({FASTAPI_REQUEST_KEY: request}):
-            yield
+            return await call_next(request)
 
-    dependencies = fastapi_kwargs.pop("dependencies", [])
-    fastapi_kwargs["dependencies"] = [Depends(init_di_context)] + dependencies
-
-    """
-    Finally, Build the application
-
-    """
-    return FastAPI(**fastapi_kwargs, lifespan=lifespan)
+    return app
