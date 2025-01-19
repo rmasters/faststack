@@ -1,6 +1,7 @@
 from contextlib import asynccontextmanager
 from typing import Any, AsyncIterator, Callable
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Depends
+from starlette.requests import HTTPConnection
 from that_depends import BaseContainer, container_context
 from faststack.apps.ioc import FASTAPI_REQUEST_KEY, FaststackContainer
 
@@ -48,7 +49,16 @@ def build_fastapi_app(
 
         await FaststackContainer.tear_down()
 
-    app = FastAPI(**fastapi_kwargs, lifespan=lifespan)
+    dependencies = fastapi_kwargs.pop("dependencies", [])
+
+    async def websocket_di(httpconn: HTTPConnection) -> AsyncIterator[None]:
+        """Ensure container context is set for both http and websocket requests"""
+        async with container_context({FASTAPI_REQUEST_KEY: httpconn}):
+            yield
+
+    dependencies.insert(0, Depends(websocket_di))
+
+    app = FastAPI(**fastapi_kwargs, lifespan=lifespan, dependencies=dependencies)
 
     """
     Dependency injection context
@@ -60,9 +70,9 @@ def build_fastapi_app(
     """
 
     # TODO: Rewrite as a starlette custom middleware
-    @app.middleware("http")
-    async def add_request_to_container_context(request: Request, call_next):
-        async with container_context({FASTAPI_REQUEST_KEY: request}):
-            return await call_next(request)
+    # @app.middleware("http")
+    # async def add_request_to_container_context(request: HTTPConnection, call_next):
+    #    async with container_context({FASTAPI_REQUEST_KEY: request}):
+    #        return await call_next(request)
 
     return app
