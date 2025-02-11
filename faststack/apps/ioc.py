@@ -4,6 +4,7 @@ from typing import (
 from fastapi import Request
 from that_depends import BaseContainer, fetch_context_item
 from that_depends.providers import Singleton, Factory, ContextResource
+from that_depends.providers.context_resources import ContextScopes
 from sqlalchemy.ext.asyncio import AsyncEngine, create_async_engine, async_sessionmaker
 from sqlmodel.ext.asyncio.session import AsyncSession
 
@@ -25,6 +26,8 @@ async def get_db_session(
 
 
 class FaststackContainer(BaseContainer):
+    default_scope = None
+
     settings: Singleton[FaststackSettings] = Singleton(FaststackSettings)  # type: ignore[call-arg] # Ignore required arguments for BaseSettings
 
     db_engine: Factory[AsyncEngine] = Factory(get_db_engine, settings.cast)
@@ -37,7 +40,7 @@ class FaststackContainer(BaseContainer):
     )
     db_session: ContextResource[AsyncSession] = ContextResource(
         get_db_session, db_session_maker.cast
-    )
+    ).with_config(scope=ContextScopes.REQUEST)
 
     context_request: Factory[Request] = Factory(
         lambda: fetch_context_item(FASTAPI_REQUEST_KEY),

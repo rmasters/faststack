@@ -3,6 +3,7 @@ from typing import Any, AsyncIterator, Callable
 from fastapi import FastAPI, Depends
 from starlette.requests import HTTPConnection
 from that_depends import BaseContainer, container_context
+from that_depends.providers.context_resources import ContextScopes
 from faststack.apps.ioc import FASTAPI_REQUEST_KEY, FaststackContainer
 
 
@@ -53,7 +54,11 @@ def build_fastapi_app(
 
     async def websocket_di(httpconn: HTTPConnection) -> AsyncIterator[None]:
         """Ensure container context is set for both http and websocket requests"""
-        async with container_context({FASTAPI_REQUEST_KEY: httpconn}):
+        async with container_context(
+            scope=ContextScopes.REQUEST,
+            global_context={FASTAPI_REQUEST_KEY: httpconn},
+            reset_all_containers=True,
+        ):
             yield
 
     dependencies.insert(0, Depends(websocket_di))

@@ -135,7 +135,7 @@ wheels = [
 
 [[package]]
 name = "faststack"
-version = "0.2.2"
+version = "0.3.0"
 source = { editable = "." }
 dependencies = [
     { name = "asyncer" },
@@ -169,7 +169,7 @@ requires-dist = [
     { name = "pydantic-settings", marker = "extra == 'apps'", specifier = ">=2.6.1" },
     { name = "sqlmodel", specifier = ">=0.0.19,<1.0" },
     { name = "sqlmodel", marker = "extra == 'apps'", specifier = ">=0.0.22" },
-    { name = "that-depends", marker = "extra == 'apps'", specifier = ">=1.26.0" },
+    { name = "that-depends", marker = "extra == 'apps'", specifier = ">=2.0.0" },
     { name = "typer", specifier = ">=0.12.3,<1.0" },
 ]
 
@@ -576,11 +576,11 @@ wheels = [
 
 [[package]]
 name = "that-depends"
-version = "1.26.0"
+version = "2.0.0"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/65/87/208d565ca5cf529c34e0eaa1b969d4f20c05b116f2a330894c73b2e3a851/that_depends-1.26.0.tar.gz", hash = "sha256:6a09f5884f5494cea0e2a77df623cd48106daf6ef0a09ac737c938134a086f37", size = 25827 }
+sdist = { url = "https://files.pythonhosted.org/packages/58/dc/75c1c45017a70ab1903b033b73e931027206de96310b559d584fb1a78010/that_depends-2.0.0.tar.gz", hash = "sha256:62db6896be1084595b355502b015be6149987183fa0455ea43d7890701c060c7", size = 54403 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/5d/79/449508d250282af3b2a292db62fd2aaeb30991f4f385246fcece8ae31802/that_depends-1.26.0-py3-none-any.whl", hash = "sha256:5069cd03f8945211934d8e816bb7f96056b57c787d288296d888e4de79115c37", size = 15365 },
+    { url = "https://files.pythonhosted.org/packages/9e/1d/4e7bd35ca32d6ee200943c9f20a4a50cbf5432791ced4b1ed799f60a2c43/that_depends-2.0.0-py3-none-any.whl", hash = "sha256:249373776527a733885d1e688dc5e4d93cce7e84a2c0b7ce98eb1e74f5f1ec5c", size = 26383 },
 ]
 
 [[package]]

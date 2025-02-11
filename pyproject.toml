@@ -34,7 +34,7 @@ Issues = "https://github.com/rmasters/faststack/issues"
 apps = [
     "pydantic-settings>=2.6.1",
     "sqlmodel>=0.0.22",
-    "that-depends>=1.26.0",
+    "that-depends>=2.0.0",
 ]
 
 [build-system]
