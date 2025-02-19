@@ -140,15 +140,10 @@ source = { editable = "." }
 dependencies = [
     { name = "asyncer" },
     { name = "fastapi" },
-    { name = "sqlmodel" },
-    { name = "typer" },
-]
-
-[package.optional-dependencies]
-apps = [
     { name = "pydantic-settings" },
     { name = "sqlmodel" },
     { name = "that-depends" },
+    { name = "typer" },
 ]
 
 [package.dev-dependencies]
@@ -166,10 +161,9 @@ dev = [
 requires-dist = [
     { name = "asyncer", specifier = ">=0.0.7,<1.0" },
     { name = "fastapi", specifier = ">=0.111.0,<1.0" },
-    { name = "pydantic-settings", marker = "extra == 'apps'", specifier = ">=2.6.1" },
-    { name = "sqlmodel", specifier = ">=0.0.19,<1.0" },
-    { name = "sqlmodel", marker = "extra == 'apps'", specifier = ">=0.0.22" },
-    { name = "that-depends", marker = "extra == 'apps'", specifier = ">=2.0.0" },
+    { name = "pydantic-settings", specifier = ">=2.6.1" },
+    { name = "sqlmodel", specifier = ">=0.0.22,<1.0" },
+    { name = "that-depends", specifier = ">=2.0.0,<3.0" },
     { name = "typer", specifier = ">=0.12.3,<1.0" },
 ]
 

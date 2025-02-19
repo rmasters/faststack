@@ -6,7 +6,9 @@ dependencies = [
     "asyncer>=0.0.7,<1.0",
     "typer>=0.12.3,<1.0",
     "fastapi>=0.111.0,<1.0",
-    "sqlmodel>=0.0.19,<1.0",
+    "sqlmodel>=0.0.22,<1.0",
+    "pydantic-settings>=2.6.1",
+    "that-depends>=2.0.0,<3.0",
 ]
 readme = "README.md"
 authors = [{ name = "Ross Masters", email = "ross@rossmasters.com" }]
@@ -29,13 +31,6 @@ classifiers = [
 [project.urls]
 Homepage = "https://github.com/rmasters/faststack"
 Issues = "https://github.com/rmasters/faststack/issues"
-
-[project.optional-dependencies]
-apps = [
-    "pydantic-settings>=2.6.1",
-    "sqlmodel>=0.0.22",
-    "that-depends>=2.0.0",
-]
 
 [build-system]
 requires = ["hatchling"]
